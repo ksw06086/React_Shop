@@ -1,3 +1,14 @@
+/* 애니메이션 동작 전 className */
+.start {
+  opacity: 0;
+}
+
+/* 애니메이션 동작 후 className */
+.end {
+  opacity: 1;
+  transition: opacity 0.5s; /* 애니메이션 스타일(0.5초에 걸쳐서 변경되게 해줌 */
+}
+
 .main-bg {
   height: 300px;
   /* background-image: url('./img/OIP.jpeg'); */

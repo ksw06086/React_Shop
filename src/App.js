@@ -7,6 +7,7 @@ import data from './data';
 import Detail from './routes/Detail';
 import Main from './routes/Main';
 import Header from './routes/Header';
+import Cart from './routes/Cart';
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main music={music} />} />
         <Route path="/detail/:id" element={<Detail music={music} />} />
+        <Route path="/cart" element={<Cart />} />
         {/* <Route path="/event" element={<Event />} >
           <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
           <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
