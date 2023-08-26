@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import styled from 'styled-components';
+import { useNavigate, useParams } from "react-router-dom";
+import { cartAdd } from "../store/store";
+import { useDispatch } from "react-redux";
 
 export default function Detail({ music }) {
     let {id} = useParams();
     let info = music.find(data => {return data.id === Number(id)});
     let [alert, setAlert] = useState(true);
+    let [count, setCount] = useState(1);
     let [tab, setTab] = useState(0);
+    const dispatch = useDispatch();
+    const history = useNavigate();
 
     useEffect(() => {
         let a = setTimeout(() => {
@@ -25,22 +29,31 @@ export default function Detail({ music }) {
             
             <div className="row mb-3">
                 {
-                    alert == true ? <div id="saleBox" className="alert alert-warning">2초 이내 구매시 할인</div> : null
+                    alert === true ? <div id="saleBox" className="alert alert-warning">2초 이내 구매시 할인</div> : null
                 }
                 <div className="col-md-6">
-                    <img src={process.env.PUBLIC_URL + "/img/music" + (Number(id)+1) + ".jpg"} width="100%" />
+                    <img src={process.env.PUBLIC_URL + "/img/music" + (Number(id)+1) + ".jpg"} width="100%" alt=""/>
                 </div>
                 <div className="col-md-6">
                     <h4 className="pt-5">{info.title}</h4>
-                    <input type="text" onInput={(e) => {
+                    <input type="text" value={1} onInput={(e) => {
                         if(isNaN(e.target.value)) { 
-                            e.target.value = '';
-                            window.alert("숫자만 입력해주세요."); 
+                            e.target.value = '1';
+                            window.alert("숫자만 입력해주세요.");
+                            return null; 
                         }
+                        setCount(Number(e.target.value));
                     }} placeholder="수량 입력란" />
                     <p>{info.content}</p>
                     <p>{info.price}원</p>
-                    <button className="btn btn-danger">주문하기</button> 
+                    <button className="btn btn-danger" onClick={()=>{
+                        let cart = {
+                            name : info.title,
+                            count : count
+                        }
+                        dispatch(cartAdd(cart));
+                        history('/cart');
+                    }}>주문하기</button> 
                 </div>
             </div>
 
