@@ -23,7 +23,6 @@ function App() {
 
   return (
     <div className="App">
-      <Transition_Ex />
       <Header />
 
       <Suspense fallback={<div>로딩중임</div>}>
