@@ -20,12 +20,21 @@ let cart = createSlice({
             info.count += 1;
         },
         cartAdd(state, action){
-            state.push({ id : state.length + 1, ...action.payload});
+            let empty = state.find((data) => data.id === action.payload.id);
+            if(empty){
+                empty.count += action.payload.count;
+            } else {
+                state.push(action.payload);
+            }
+        },
+        removeCart(state, action){
+            let cartlist = state.filter((data) => data.id !== action.payload);
+            return cartlist;
         }
     }
 });
 
-export let { plusCount, cartAdd } = cart.actions;
+export let { plusCount, cartAdd, removeCart } = cart.actions;
 
 export default configureStore({
     reducer: {

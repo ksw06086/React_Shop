@@ -2,7 +2,7 @@
 // import subImage from './img/OIP.jpeg';        // src 폴더 내의 있는 이미지파일
 import './App.css';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import data from './data';
 import Detail from './routes/Detail';
 import Main from './routes/Main';
@@ -10,9 +10,15 @@ import Header from './routes/Header';
 import Cart from './routes/Cart';
 
 function App() {
-  
-  let [music] = useState(data);
-  
+
+  let [music, setMusic] = useState(data);
+
+  useEffect(() => {
+    if(!localStorage.getItem('watched')){
+      localStorage.setItem('watched', JSON.stringify( [] ));
+    }
+  }, []);
+
   return (
     <div className="App">
       <Header />

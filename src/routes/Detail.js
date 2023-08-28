@@ -12,12 +12,19 @@ export default function Detail({ music }) {
     let [tab, setTab] = useState(0);
     const dispatch = useDispatch();
     const history = useNavigate();
+    
+    useEffect(() => {
+        let data = JSON.parse(localStorage.getItem('watched'));
+        data.push(info.id);
+        data = new Set(data); data = Array.from(data);
+        localStorage.setItem('watched', JSON.stringify(data));
+    })
 
     useEffect(() => {
         let a = setTimeout(() => {
             setAlert(false);
         }, 2000);
-
+        
         // useEffect 동작 전에 실행되는 실행문 > ex setTimeout 이전꺼는 제거
         return () => {
             clearTimeout(a); // 타이머 제거
@@ -36,7 +43,7 @@ export default function Detail({ music }) {
                 </div>
                 <div className="col-md-6">
                     <h4 className="pt-5">{info.title}</h4>
-                    <input type="text" value={1} onInput={(e) => {
+                    <input type="text" onInput={(e) => {
                         if(isNaN(e.target.value)) { 
                             e.target.value = '1';
                             window.alert("숫자만 입력해주세요.");
@@ -48,6 +55,7 @@ export default function Detail({ music }) {
                     <p>{info.price}원</p>
                     <button className="btn btn-danger" onClick={()=>{
                         let cart = {
+                            id : info.id,
                             name : info.title,
                             count : count
                         }

@@ -11,7 +11,18 @@ export default function Main({ music }) {
     return (
         <>
             <div className='main-bg' style={{ backgroundImage : `url(${process.env.PUBLIC_URL + '/img/background.jpg'})` }}></div>
-
+            <h4>최근 본 상품</h4>
+            <div className='container'>
+                <div className='row' style={{ backgroundColor : 'lightyellow' }}>
+                {JSON.parse(localStorage.getItem('watched')).map(data => {
+                    return (
+                        <div className='col-md-2 mt-3' key={data}>
+                            <img src={process.env.PUBLIC_URL + "/img/music" + (data+1) + ".jpg"} width={"90%"} height={"80%"}/>
+                        </div>
+                    );
+                })}
+                </div>
+            </div>
             <div className='container'>
                 <div className='row'>
                 {music.map(info => (<Card info={info} key={info.id} />))}
